@@ -2,7 +2,9 @@ import axios, { AxiosError, InternalAxiosRequestConfig } from "axios";
 import { useAuthStore } from "../store/useAuthStore";
 
 // Backend API URL'si - localhost kullanıyoruz
-const baseURL = process.env.EXPO_PUBLIC_API_URL || "http://localhost:8080/api";
+const baseURL =
+  process.env.EXPO_PUBLIC_API_URL ||
+  "https://daily-mate-backend.onrender.com/api";
 
 console.log("AxiosInstance: BaseURL:", baseURL);
 
