@@ -6,7 +6,7 @@ interface ButtonProps {
   onPress: () => void;
   title: string;
   isLoading?: boolean;
-  variant?: "primary" | "secondary" | "outline" | "danger";
+  variant?: "primary" | "secondary" | "outline" | "danger" | "success";
   size?: "small" | "medium" | "large";
   icon?: keyof typeof Ionicons.glyphMap;
   disabled?: boolean;
@@ -24,26 +24,28 @@ const Button = ({
   const getVariantClasses = () => {
     switch (variant) {
       case "primary":
-        return "bg-gradient-to-r from-blue-500 to-blue-600 shadow-lg shadow-blue-500/25";
+        return "bg-gradient-to-r from-primary-500 to-primary-600 shadow-lg shadow-primary-500/25";
       case "secondary":
-        return "bg-gray-500 shadow-lg shadow-gray-500/25";
+        return "bg-surface-500 shadow-lg shadow-surface-500/25";
       case "outline":
-        return "bg-transparent border-2 border-blue-500";
+        return "bg-transparent border-2 border-primary-500";
       case "danger":
-        return "bg-gradient-to-r from-red-500 to-red-600 shadow-lg shadow-red-500/25";
+        return "bg-gradient-to-r from-error-500 to-error-600 shadow-lg shadow-error-500/25";
+      case "success":
+        return "bg-gradient-to-r from-success-500 to-success-600 shadow-lg shadow-success-500/25";
       default:
-        return "bg-gradient-to-r from-blue-500 to-blue-600 shadow-lg shadow-blue-500/25";
+        return "bg-gradient-to-r from-primary-500 to-primary-600 shadow-lg shadow-primary-500/25";
     }
   };
 
   const getSizeClasses = () => {
     switch (size) {
       case "small":
-        return "px-4 py-2";
+        return "px-4 py-2.5";
       case "large":
-        return "px-6 py-4";
+        return "px-8 py-4";
       default:
-        return "px-5 py-3";
+        return "px-6 py-3.5";
     }
   };
 
@@ -61,7 +63,7 @@ const Button = ({
   const getTextColor = () => {
     switch (variant) {
       case "outline":
-        return "text-blue-500";
+        return "text-primary-600";
       default:
         return "text-white";
     }
@@ -71,25 +73,25 @@ const Button = ({
     <TouchableOpacity
       onPress={onPress}
       disabled={isLoading || disabled}
-      className={`rounded-xl items-center justify-center ${getVariantClasses()} ${getSizeClasses()} ${
+      className={`rounded-2xl items-center justify-center ${getVariantClasses()} ${getSizeClasses()} ${
         disabled ? "opacity-50" : ""
       }`}
       activeOpacity={0.8}
     >
       <View className="flex-row items-center">
         {isLoading ? (
-          <ActivityIndicator color={variant === "outline" ? "#3b82f6" : "white"} />
+          <ActivityIndicator color={variant === "outline" ? "#7c6df2" : "white"} />
         ) : (
           <>
             {icon && (
               <Ionicons 
                 name={icon} 
                 size={size === "small" ? 16 : size === "large" ? 20 : 18} 
-                color={variant === "outline" ? "#3b82f6" : "white"} 
+                color={variant === "outline" ? "#7c6df2" : "white"} 
                 style={{ marginRight: 8 }}
               />
             )}
-            <Text className={`font-semibold ${getTextSize()} ${getTextColor()}`}>
+            <Text className={`font-bold ${getTextSize()} ${getTextColor()}`}>
               {title}
             </Text>
           </>

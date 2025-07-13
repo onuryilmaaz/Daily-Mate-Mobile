@@ -13,35 +13,36 @@ interface ChartItemProps {
 
 const ChartItem = ({ item }: ChartItemProps) => {
   return (
-    <View className="flex-row items-center mb-4">
-      <View
-        style={{ backgroundColor: item.color }}
-        className="w-3 h-3 rounded-full mr-3"
-      />
-      <View className="flex-1">
-        {/* HATA BURADAYDI: div -> View olarak değiştirildi */}
-        <View className="flex-row justify-between items-center">
-          <Text className="text-gray-700 font-semibold">{item.name}</Text>
-          <Text className="text-gray-800 font-bold">
-            {item.totalEarning.toLocaleString("tr-TR")} ₺
-          </Text>
+    <View className="mb-6 p-4 bg-surface-50 rounded-2xl border border-surface-100">
+      <View className="flex-row items-center mb-3">
+        <View
+          style={{ backgroundColor: item.color }}
+          className="w-4 h-4 rounded-full mr-3 shadow-sm"
+        />
+        <View className="flex-1">
+          <View className="flex-row justify-between items-center">
+            <Text className="text-surface-800 font-bold text-lg">{item.name}</Text>
+            <Text className="text-surface-900 font-bold text-lg">
+              {item.totalEarning.toLocaleString("tr-TR")} ₺
+            </Text>
+          </View>
+          <View className="flex-row justify-between items-center mt-1">
+            <Text className="text-surface-500 text-sm font-medium">{item.dayCount} gün çalışıldı</Text>
+            <Text className="text-primary-600 text-sm font-bold">
+              {item.percentage}% pay
+            </Text>
+          </View>
         </View>
-        {/* HATA BURADAYDI: div -> View olarak değiştirildi */}
-        <View className="flex-row justify-between items-center mt-1">
-          <Text className="text-gray-500 text-xs">{item.dayCount} gün</Text>
-          <Text className="text-teal-600 text-xs font-semibold">
-            {item.percentage}% pay
-          </Text>
-        </View>
-        <View className="w-full bg-gray-200 rounded-full h-1 mt-1">
-          <View
-            style={{
-              width: `${item.percentage}%`,
-              backgroundColor: item.color,
-            }}
-            className="h-1 rounded-full"
-          />
-        </View>
+      </View>
+      
+      <View className="w-full bg-surface-200 rounded-full h-2">
+        <View
+          style={{
+            width: `${item.percentage}%`,
+            backgroundColor: item.color,
+          }}
+          className="h-2 rounded-full shadow-sm"
+        />
       </View>
     </View>
   );

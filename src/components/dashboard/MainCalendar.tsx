@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Alert, AlertButton } from "react-native"; // AlertButton'ı import et
+import { View, Alert, AlertButton } from "react-native";
 import { Calendar, LocaleConfig } from "react-native-calendars";
 import { useWorkdayStore } from "../../store/useWorkdayStore";
 import { useWorkplaceStore } from "../../store/useWorkplaceStore";
@@ -59,13 +59,11 @@ const MainCalendar = () => {
       return;
     }
 
-    // Dizinin tipini burada açıkça belirtiyoruz
     const alertButtons: AlertButton[] = workplaces.map((wp) => ({
       text: wp.name,
       onPress: () => addWorkday({ date: day.dateString, workplaceId: wp._id }),
     }));
 
-    // Artık bu satır hata vermeyecek
     alertButtons.push({ text: "İptal", style: "cancel" });
 
     Alert.alert(
@@ -76,21 +74,27 @@ const MainCalendar = () => {
   };
 
   return (
-    <View className="mt-6 bg-white rounded-xl shadow-sm p-2">
+    <View className="mt-8 bg-white rounded-3xl shadow-medium p-4 border border-surface-100">
       <Calendar
         markedDates={markedDates}
         onDayPress={handleDayPress}
         theme={{
           backgroundColor: "#ffffff",
           calendarBackground: "#ffffff",
-          textSectionTitleColor: "#b6c1cd",
-          todayTextColor: "#14b8a6",
-          dayTextColor: "#2d4150",
-          arrowColor: "#14b8a6",
-          monthTextColor: "#14b8a6",
-          textDayFontWeight: "300",
+          textSectionTitleColor: "#9aa8b6",
+          todayTextColor: "#7c6df2",
+          dayTextColor: "#495057",
+          arrowColor: "#7c6df2",
+          monthTextColor: "#495057",
+          textDayFontWeight: "500",
           textMonthFontWeight: "bold",
-          textDayHeaderFontWeight: "300",
+          textDayHeaderFontWeight: "600",
+          textMonthFontSize: 18,
+          textDayFontSize: 16,
+          textDayHeaderFontSize: 14,
+        }}
+        style={{
+          borderRadius: 16,
         }}
       />
     </View>

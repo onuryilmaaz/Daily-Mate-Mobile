@@ -35,35 +35,48 @@ const LoginScreen = ({ navigation }: any) => {
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-gray-100 justify-center p-6">
-      <View className="items-center mb-10">
-        <Ionicons name="briefcase" size={64} color="#14b8a6" />
-        <Text className="text-4xl font-bold text-teal-600 mt-2">
+    <SafeAreaView className="flex-1 bg-gradient-to-br from-surface-50 to-surface-100 justify-center p-6">
+      <View className="items-center mb-12">
+        <View className="bg-gradient-to-br from-primary-500 to-primary-600 p-6 rounded-3xl shadow-strong mb-6">
+          <Ionicons name="briefcase" size={48} color="white" />
+        </View>
+        <Text className="text-5xl font-bold text-surface-900 mb-2 tracking-tight">
           Daily Mate
         </Text>
-        <Text className="text-lg text-gray-500">Hesabınıza giriş yapın</Text>
+        <Text className="text-xl text-surface-600 font-medium">Hesabınıza giriş yapın</Text>
       </View>
-      <Input
-        placeholder="E-posta"
-        value={email}
-        onChangeText={setEmail}
-        keyboardType="email-address"
-        autoCapitalize="none"
-      />
-      <Input
-        placeholder="Şifre"
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry
-      />
-      <View className="mt-2" />
-      <Button title="Giriş Yap" onPress={handleLogin} isLoading={isLoading} />
+      
+      <View className="bg-white rounded-3xl p-8 shadow-medium border border-surface-100">
+        <Input
+          placeholder="E-posta adresiniz"
+          value={email}
+          onChangeText={setEmail}
+          keyboardType="email-address"
+          autoCapitalize="none"
+          icon="mail-outline"
+        />
+        <Input
+          placeholder="Şifreniz"
+          value={password}
+          onChangeText={setPassword}
+          secureTextEntry
+          icon="lock-closed-outline"
+        />
+        <Button 
+          title="Giriş Yap" 
+          onPress={handleLogin} 
+          isLoading={isLoading}
+          size="large"
+          icon="log-in-outline"
+        />
+      </View>
+      
       <TouchableOpacity
         onPress={() => navigation.navigate("Register")}
-        className="mt-6"
+        className="mt-8 p-4"
       >
-        <Text className="text-center text-teal-600">
-          Hesabın yok mu? <Text className="font-bold">Kayıt Ol</Text>
+        <Text className="text-center text-surface-600 text-base">
+          Hesabın yok mu? <Text className="font-bold text-primary-600">Kayıt Ol</Text>
         </Text>
       </TouchableOpacity>
     </SafeAreaView>

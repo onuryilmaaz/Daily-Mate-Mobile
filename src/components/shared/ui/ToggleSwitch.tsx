@@ -20,9 +20,9 @@ const ToggleSwitch = ({
       case "small":
         return "w-10 h-6";
       case "large":
-        return "w-14 h-8";
+        return "w-16 h-9";
       default:
-        return "w-12 h-7";
+        return "w-14 h-8";
     }
   };
 
@@ -31,9 +31,9 @@ const ToggleSwitch = ({
       case "small":
         return "w-5 h-5";
       case "large":
-        return "w-7 h-7";
+        return "w-8 h-8";
       default:
-        return "w-6 h-6";
+        return "w-7 h-7";
     }
   };
 
@@ -41,23 +41,23 @@ const ToggleSwitch = ({
     <TouchableOpacity
       onPress={onToggle}
       disabled={disabled}
-      className={`${getSizeClasses()} rounded-full p-0.5 transition-all duration-200 ${
+      className={`${getSizeClasses()} rounded-full p-0.5 transition-all duration-300 ${
         isActive
-          ? "bg-emerald-500 shadow-lg shadow-emerald-500/30"
-          : "bg-gray-300"
+          ? "bg-gradient-to-r from-success-500 to-success-600 shadow-lg shadow-success-500/30"
+          : "bg-surface-300"
       } ${disabled ? "opacity-50" : ""}`}
       activeOpacity={0.8}
     >
       <View
-        className={`${getThumbSize()} rounded-full bg-white shadow-sm items-center justify-center ${
+        className={`${getThumbSize()} rounded-full bg-white shadow-medium items-center justify-center ${
           isActive ? "ml-auto" : "ml-0"
-        } transition-all duration-200`}
+        } transition-all duration-300`}
       >
         {isActive && (
           <Ionicons
             name="checkmark"
-            size={size === "small" ? 10 : size === "large" ? 16 : 12}
-            color="#10b981"
+            size={size === "small" ? 10 : size === "large" ? 16 : 14}
+            color="#22c55e"
           />
         )}
       </View>

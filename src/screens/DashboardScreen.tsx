@@ -25,20 +25,20 @@ import { useToast } from "../components/shared/ui/ToastProvider";
 const WorkplaceListHeader = () => {
   const navigation = useNavigation<MainStackNavigationProp>();
   return (
-    <View className="flex-row justify-between items-center mb-6 mt-6">
+    <View className="flex-row justify-between items-center mb-6 mt-8">
       <View>
-        <Text className="text-2xl font-bold text-gray-900">İş Yerleri</Text>
-        <Text className="text-gray-500 text-sm mt-1">
-          İş yerlerinizi yönetin
+        <Text className="text-3xl font-bold text-surface-900">İş Yerleri</Text>
+        <Text className="text-surface-500 text-base mt-1 font-medium">
+          İş yerlerinizi yönetin ve takip edin
         </Text>
       </View>
       <TouchableOpacity
         onPress={() => navigation.navigate("WorkplaceForm", {})}
-        className="bg-gradient-to-r from-blue-500 to-blue-600 flex-row items-center px-4 py-3 rounded-xl shadow-lg shadow-blue-500/25"
+        className="bg-gradient-to-r from-primary-500 to-primary-600 flex-row items-center px-5 py-3.5 rounded-2xl shadow-lg shadow-primary-500/25"
         activeOpacity={0.8}
       >
         <Ionicons name="add" size={20} color="white" />
-        <Text className="text-white font-semibold ml-2">Yeni Ekle</Text>
+        <Text className="text-white font-bold ml-2">Yeni Ekle</Text>
       </TouchableOpacity>
     </View>
   );
@@ -77,7 +77,6 @@ const DashboardScreen = () => {
     loadData();
   }, [fetchWorkplaces, fetchWorkdays]);
 
-  // Debug için ayrı useEffect
   useEffect(() => {
     console.log("Workplaces güncellendi:", workplaces.length);
     console.log("Workdays güncellendi:", workdays.length);
@@ -95,9 +94,9 @@ const DashboardScreen = () => {
           onPress: async () => {
             try {
               await deleteWorkplace(id);
-              Alert.alert("Başarılı", "İş yeri başarıyla silindi.");
+              showToast("İş yeri başarıyla silindi.", "success");
             } catch (err) {
-              Alert.alert("Hata", "İş yeri silinirken bir hata oluştu.");
+              showToast("İş yeri silinirken bir hata oluştu.", "error");
             }
           },
         },
@@ -129,48 +128,50 @@ const DashboardScreen = () => {
     }
   };
 
-  // Debug bilgisi
   if (error) {
     return (
-      <SafeAreaView className="flex-1 bg-gray-50">
+      <SafeAreaView className="flex-1 bg-surface-50">
         <Header />
-        <View className="flex-1 justify-center items-center p-4">
-          <Text className="text-red-500 text-lg mb-2">Hata:</Text>
-          <Text className="text-gray-700 text-center">{error}</Text>
+        <View className="flex-1 justify-center items-center p-6">
+          <View className="bg-error-50 p-4 rounded-2xl mb-4">
+            <Ionicons name="alert-circle" size={32} color="#ef4444" />
+          </View>
+          <Text className="text-error-600 text-xl font-bold mb-2">Hata Oluştu</Text>
+          <Text className="text-surface-700 text-center font-medium">{error}</Text>
         </View>
       </SafeAreaView>
     );
   }
 
-  // Listeden önceki stat kartları ve başlığı içeren Header bileşeni
   const ListHeader = () => (
-    <View className="p-4 pb-0">
-      <View className="flex-row justify-between mb-4">
+    <View className="p-6 pb-0">
+      <View className="flex-row justify-between mb-6">
         <StatCard
           title="Bu Ay Toplam Kazanç"
           value="10.000 ₺"
           icon="cash-outline"
+          trend={{ value: "+12%", isPositive: true }}
         />
         <StatCard
           title="Çalışılan Gün Sayısı"
           value={`${workdays.length}`}
           icon="calendar-outline"
+          trend={{ value: "+3", isPositive: true }}
         />
       </View>
       <WorkplaceListHeader />
     </View>
   );
 
-  // Takvim ve istatistikleri içeren Footer bileşeni
   const ListFooter = () => (
-    <View className="p-4 pt-0">
+    <View className="p-6 pt-0">
       <MainCalendar />
       <Statistics />
     </View>
   );
 
   return (
-    <SafeAreaView className="flex-1 bg-gray-50">
+    <SafeAreaView className="flex-1 bg-surface-50">
       <Header />
       {(workplacesLoading || workdaysLoading) && (
         <LoadingSpinner text="Veriler yükleniyor..." fullScreen={true} />
@@ -179,7 +180,7 @@ const DashboardScreen = () => {
         data={workplaces}
         keyExtractor={(item) => item._id}
         renderItem={({ item }) => (
-          <View className="px-4">
+          <View className="px-6">
             <WorkplaceCard
               workplace={item}
               onEdit={() =>
@@ -196,7 +197,7 @@ const DashboardScreen = () => {
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ paddingBottom: 20 }}
+        contentContainerStyle={{ paddingBottom: 32 }}
         ListEmptyComponent={
           <EmptyState
             icon="business-outline"

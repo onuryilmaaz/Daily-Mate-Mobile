@@ -19,53 +19,45 @@ const Input = ({
   const getVariantClasses = () => {
     switch (variant) {
       case "outlined":
-        return "border-2 border-gray-300 bg-transparent";
+        return "border-2 border-surface-200 bg-transparent";
       case "filled":
-        return "bg-gray-100 border-0";
+        return "bg-surface-50 border-0";
       default:
-        return "border border-gray-300 bg-white";
-    }
-  };
-
-  const getFocusClasses = () => {
-    switch (variant) {
-      case "outlined":
-        return "border-blue-500";
-      case "filled":
-        return "bg-gray-200";
-      default:
-        return "border-blue-500 bg-white";
+        return "border border-surface-200 bg-white";
     }
   };
 
   return (
-    <View className="mb-4">
+    <View className="mb-5">
       {label && (
-        <Text className="text-gray-700 font-medium mb-2 text-sm">{label}</Text>
+        <Text className="text-surface-700 font-semibold mb-3 text-base">{label}</Text>
       )}
 
       <View
-        className={`flex-row items-center rounded-xl px-4 py-3 ${getVariantClasses()} ${
-          error ? "border-red-500" : ""
+        className={`flex-row items-center rounded-2xl px-4 py-4 ${getVariantClasses()} ${
+          error ? "border-error-500" : ""
         }`}
       >
         {icon && (
-          <Ionicons
-            name={icon}
-            size={20}
-            color={error ? "#ef4444" : "#6b7280"}
-            style={{ marginRight: 12 }}
-          />
+          <View className="bg-surface-50 p-2 rounded-xl mr-3">
+            <Ionicons
+              name={icon}
+              size={20}
+              color={error ? "#ef4444" : "#7c6df2"}
+            />
+          </View>
         )}
 
         <TextInput
-          className={`flex-1 text-gray-900 text-base ${props.multiline ? "min-h-[80px]" : ""}`}
-          placeholderTextColor="#9ca3af"
+          className={`flex-1 text-surface-900 text-base font-medium ${props.multiline ? "min-h-[80px]" : ""}`}
+          placeholderTextColor="#9aa8b6"
           {...props}
         />
       </View>
 
-      {error && <Text className="text-red-500 text-sm mt-1 ml-1">{error}</Text>}
+      {error && (
+        <Text className="text-error-500 text-sm mt-2 ml-2 font-medium">{error}</Text>
+      )}
     </View>
   );
 };
