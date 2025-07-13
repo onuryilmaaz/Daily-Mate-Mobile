@@ -7,6 +7,7 @@ type WorkdayState = {
   isLoading: boolean;
   fetchWorkdays: () => Promise<void>;
   addWorkday: (data: { workplaceId: string; date: string }) => Promise<void>;
+  removeWorkday: (id: string) => Promise<void>;
 };
 
 export const useWorkdayStore = create<WorkdayState>((set, get) => ({
@@ -32,6 +33,16 @@ export const useWorkdayStore = create<WorkdayState>((set, get) => ({
       await get().fetchWorkdays();
     } catch (error) {
       console.error("WorkdayStore: Çalışma günü eklenemedi:", error);
+      throw error;
+    }
+  },
+  removeWorkday: async (id: string) => {
+    try {
+      console.log("WorkdayStore: Çalışma günü siliniyor:", id);
+      await workdayService.remove(id);
+      await get().fetchWorkdays();
+    } catch (error) {
+      console.error("WorkdayStore: Çalışma günü silinemedi:", error);
       throw error;
     }
   },

@@ -1,9 +1,12 @@
-import React from "react";
-import { View, Alert, AlertButton } from "react-native";
+import React, { useState } from "react";
+import { View } from "react-native";
 import { Calendar, LocaleConfig } from "react-native-calendars";
 import { useWorkdayStore } from "../../store/useWorkdayStore";
 import { useWorkplaceStore } from "../../store/useWorkplaceStore";
 import { useCalendarMarks } from "../../hooks/useCalendarMarks";
+import WorkdayModal from "../shared/ui/WorkdayModal";
+
+type AlertButtonVariant = "primary" | "secondary" | "danger" | "cancel";
 
 LocaleConfig.locales["tr"] = {
   monthNames: [
@@ -49,28 +52,47 @@ LocaleConfig.locales["tr"] = {
 LocaleConfig.defaultLocale = "tr";
 
 const MainCalendar = () => {
-  const { workdays, addWorkday } = useWorkdayStore();
+  const { workdays, addWorkday, removeWorkday } = useWorkdayStore();
   const { workplaces } = useWorkplaceStore();
   const markedDates = useCalendarMarks(workdays);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [selectedDate, setSelectedDate] = useState("");
+  const [selectedWorkplaceId, setSelectedWorkplaceId] = useState<
+    string | undefined
+  >(undefined);
+  const [showDelete, setShowDelete] = useState(false);
+
+  // Seçili gün için workday var mı?
+  const getWorkdayForDate = (date: string) =>
+    workdays.find((wd) => wd.date.slice(0, 10) === date.slice(0, 10));
 
   const handleDayPress = (day: any) => {
-    if (workplaces.length === 0) {
-      Alert.alert("Hata", "Lütfen önce bir iş yeri ekleyin.");
-      return;
+    setSelectedDate(day.dateString);
+    const workday = getWorkdayForDate(day.dateString);
+    setSelectedWorkplaceId(workday?.workplaceId?._id);
+    setShowDelete(!!workday);
+    setModalVisible(true);
+  };
+
+  const handleConfirm = () => {
+    if (!selectedWorkplaceId) return;
+    const workday = getWorkdayForDate(selectedDate);
+    if (workday) {
+      // Güncellensin
+      removeWorkday(workday._id);
+      addWorkday({ date: selectedDate, workplaceId: selectedWorkplaceId });
+    } else {
+      addWorkday({ date: selectedDate, workplaceId: selectedWorkplaceId });
     }
+    setModalVisible(false);
+  };
 
-    const alertButtons: AlertButton[] = workplaces.map((wp) => ({
-      text: wp.name,
-      onPress: () => addWorkday({ date: day.dateString, workplaceId: wp._id }),
-    }));
-
-    alertButtons.push({ text: "İptal", style: "cancel" });
-
-    Alert.alert(
-      `${day.dateString} için iş yeri seçin`,
-      "O gün hangi iş yerinde çalıştınız?",
-      alertButtons
-    );
+  const handleDelete = () => {
+    const workday = getWorkdayForDate(selectedDate);
+    if (workday) {
+      removeWorkday(workday._id);
+    }
+    setModalVisible(false);
   };
 
   return (
@@ -81,7 +103,7 @@ const MainCalendar = () => {
         theme={{
           backgroundColor: "#ffffff",
           calendarBackground: "#ffffff",
-          textSectionTitleColor: "#9aa8b6",
+          textSectionTitleColor: "9aa8b6",
           todayTextColor: "#7c6df2",
           dayTextColor: "#495057",
           arrowColor: "#7c6df2",
@@ -96,6 +118,17 @@ const MainCalendar = () => {
         style={{
           borderRadius: 16,
         }}
+      />
+      <WorkdayModal
+        visible={modalVisible}
+        workplaces={workplaces}
+        selectedWorkplaceId={selectedWorkplaceId}
+        onSelect={setSelectedWorkplaceId}
+        onConfirm={handleConfirm}
+        onDelete={showDelete ? handleDelete : undefined}
+        onClose={() => setModalVisible(false)}
+        showDelete={showDelete}
+        dateLabel={selectedDate}
       />
     </View>
   );
