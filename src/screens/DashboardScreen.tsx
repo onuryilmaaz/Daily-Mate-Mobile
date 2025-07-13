@@ -130,25 +130,30 @@ const DashboardScreen = () => {
 
   if (error) {
     return (
-      <SafeAreaView className="flex-1 bg-gray-50">
+      <>
         <Header />
         <View className="flex-1 justify-center items-center p-6">
           <View className="bg-red-50 p-4 rounded-xl mb-4">
             <Ionicons name="alert-circle" size={32} color="#ef4444" />
           </View>
-          <Text className="text-red-600 text-xl font-bold mb-2">Hata Oluştu</Text>
+          <Text className="text-red-600 text-xl font-bold mb-2">
+            Hata Oluştu
+          </Text>
           <Text className="text-gray-700 text-center font-medium">{error}</Text>
         </View>
-      </SafeAreaView>
+      </>
     );
   }
 
   const ListHeader = () => (
     <View className="px-6 pt-6 pb-0">
-      <View className="flex-row justify-between mb-6">
+      <View className="flex-row justify-between">
         <StatCard
           title="Bu Ay Toplam Kazanç"
-          value="10.000 ₺"
+          value={`${workdays.reduce(
+            (total, day) => total + day.wageOnThatDay,
+            0
+          )}`}
           icon="cash-outline"
           trend={{ value: "+12%", isPositive: true }}
         />
@@ -159,19 +164,14 @@ const DashboardScreen = () => {
           trend={{ value: "+3", isPositive: true }}
         />
       </View>
-      <WorkplaceListHeader />
-    </View>
-  );
-
-  const ListFooter = () => (
-    <View className="p-6 pt-0">
-      <MainCalendar />
-      <Statistics />
+      <View className="mb-6">
+        <MainCalendar />
+      </View>
     </View>
   );
 
   return (
-    <SafeAreaView className="flex-1 bg-gray-50">
+    <>
       <Header />
       {(workplacesLoading || workdaysLoading) && (
         <LoadingSpinner text="Veriler yükleniyor..." fullScreen={true} />
@@ -179,36 +179,15 @@ const DashboardScreen = () => {
       <FlatList
         data={workplaces}
         keyExtractor={(item) => item._id}
-        renderItem={({ item }) => (
-          <View className="px-6">
-            <WorkplaceCard
-              workplace={item}
-              onEdit={() =>
-                navigation.navigate("WorkplaceForm", { workplace: item })
-              }
-              onDelete={() => handleDelete(item._id, item.name)}
-              onToggle={() => handleToggle(item._id, item.name, item.isActive)}
-            />
-          </View>
-        )}
+        renderItem={({ item }) => <View className="px-6"></View>}
         ListHeaderComponent={<ListHeader />}
-        ListFooterComponent={<ListFooter />}
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingBottom: 32 }}
-        ListEmptyComponent={
-          <EmptyState
-            icon="business-outline"
-            title="Henüz iş yeri eklenmemiş"
-            description="İlk iş yerinizi ekleyerek çalışma takibinize başlayın. İş yerlerinizi yönetmek ve günlük kazançlarınızı takip etmek için yeni bir iş yeri ekleyin."
-            actionText="Yeni iş yeri ekle"
-            onAction={() => navigation.navigate("WorkplaceForm", {})}
-          />
-        }
       />
-    </SafeAreaView>
+    </>
   );
 };
 

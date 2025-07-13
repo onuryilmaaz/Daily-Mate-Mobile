@@ -12,6 +12,7 @@ export const authService = {
   },
   register: async (data: {
     name: string;
+    surname: string;
     email: string;
     password: string;
   }): Promise<{ token: string; user: User }> => {
@@ -21,5 +22,18 @@ export const authService = {
   getMe: async (): Promise<User> => {
     const res = await axiosInstance.get(API_PATHS.AUTH.GET_ME);
     return res.data;
+  },
+  googleLogin: async () => {
+    // Google Sign-In implementasyonu
+    // Örneğin: @react-native-google-signin/google-signin kullanarak
+    return {
+      token: "google-token",
+      user: {
+        _id: "google-user-id",
+        name: "Google",
+        surname: "User",
+        email: "google@example.com",
+      },
+    };
   },
 };

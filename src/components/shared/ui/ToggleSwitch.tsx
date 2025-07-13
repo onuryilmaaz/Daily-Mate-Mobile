@@ -7,6 +7,9 @@ interface ToggleSwitchProps {
   onToggle: () => void;
   size?: "small" | "medium" | "large";
   disabled?: boolean;
+  onColor?: string;
+  offColor?: string;
+  thumbColor?: string;
 }
 
 const ToggleSwitch = ({
@@ -14,6 +17,9 @@ const ToggleSwitch = ({
   onToggle,
   size = "medium",
   disabled = false,
+  onColor = "#22c55e", // default yeşil
+  offColor = "#ef4444", // default kırmızı
+  thumbColor = "#fff", // default beyaz
 }: ToggleSwitchProps) => {
   const getSizeClasses = () => {
     switch (size) {
@@ -41,23 +47,25 @@ const ToggleSwitch = ({
     <TouchableOpacity
       onPress={onToggle}
       disabled={disabled}
-      className={`${getSizeClasses()} rounded-full p-0.5 transition-all duration-300 ${
-        isActive
-          ? "bg-gradient-to-r from-success-500 to-success-600 shadow-lg shadow-success-500/30"
-          : "bg-surface-300"
-      } ${disabled ? "opacity-50" : ""}`}
+      className={`${getSizeClasses()} rounded-full p-0.5 transition-all duration-300`}
+      style={{
+        backgroundColor: isActive ? onColor : offColor,
+        opacity: disabled ? 0.5 : 1,
+      }}
       activeOpacity={0.8}
     >
       <View
-        className={`${getThumbSize()} rounded-full bg-white shadow-medium items-center justify-center ${
-          isActive ? "ml-auto" : "ml-0"
-        } transition-all duration-300`}
+        className={`${getThumbSize()} rounded-full shadow-medium items-center justify-center`}
+        style={{
+          backgroundColor: thumbColor,
+          marginLeft: isActive ? "auto" : 0,
+        }}
       >
         {isActive && (
           <Ionicons
             name="checkmark"
             size={size === "small" ? 10 : size === "large" ? 16 : 14}
-            color="#22c55e"
+            color={onColor}
           />
         )}
       </View>

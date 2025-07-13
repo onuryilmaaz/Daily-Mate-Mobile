@@ -1,63 +1,61 @@
 import React from "react";
-import { View, Text, TextInput, TextInputProps } from "react-native";
+import {
+  View,
+  TextInput,
+  TouchableOpacity,
+  TextInputProps,
+  ViewStyle,
+} from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
 interface InputProps extends TextInputProps {
-  label?: string;
-  error?: string;
-  icon?: keyof typeof Ionicons.glyphMap;
-  variant?: "default" | "outlined" | "filled";
+  icon?: string;
+  rightIcon?: string;
+  onRightIconPress?: () => void;
+  style?: ViewStyle;
 }
 
-const Input = ({
-  label,
-  error,
+const Input: React.FC<InputProps> = ({
   icon,
-  variant = "default",
+  rightIcon,
+  onRightIconPress,
+  style,
   ...props
-}: InputProps) => {
-  const getVariantClasses = () => {
-    switch (variant) {
-      case "outlined":
-        return "border-2 border-surface-200 bg-transparent";
-      case "filled":
-        return "bg-surface-50 border-0";
-      default:
-        return "border border-surface-200 bg-white";
-    }
-  };
-
+}) => {
   return (
-    <View className="mb-5">
-      {label && (
-        <Text className="text-surface-700 font-semibold mb-3 text-base">{label}</Text>
-      )}
-
-      <View
-        className={`flex-row items-center rounded-2xl px-4 py-4 ${getVariantClasses()} ${
-          error ? "border-error-500" : ""
-        }`}
-      >
+    <View className="relative mb-4">
+      <View className="flex-row items-center bg-surface-50 border border-surface-200 rounded-2xl px-4 min-h-[56px] focus-within:border-primary-500 focus-within:bg-white">
         {icon && (
-          <View className="bg-surface-50 p-2 rounded-xl mr-3">
-            <Ionicons
-              name={icon}
-              size={20}
-              color={error ? "#ef4444" : "#7c6df2"}
-            />
+          <View className="mr-3">
+            <Ionicons name={icon as any} size={20} color="#6B7280" />
           </View>
         )}
-
         <TextInput
-          className={`flex-1 text-surface-900 text-base font-medium ${props.multiline ? "min-h-[80px]" : ""}`}
-          placeholderTextColor="#9aa8b6"
+          className="flex-1 text-surface-900 text-base font-medium"
+          placeholderTextColor="#9CA3AF"
+          textAlignVertical="center"
+          style={[
+            {
+              height: 56,
+              lineHeight: 20,
+              textAlignVertical: "center",
+              paddingTop: 0,
+              paddingBottom: 0,
+            },
+            style,
+          ]}
           {...props}
         />
+        {rightIcon && (
+          <TouchableOpacity
+            onPress={onRightIconPress}
+            className="p-2 ml-2"
+            hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+          >
+            <Ionicons name={rightIcon as any} size={20} color="#6B7280" />
+          </TouchableOpacity>
+        )}
       </View>
-
-      {error && (
-        <Text className="text-error-500 text-sm mt-2 ml-2 font-medium">{error}</Text>
-      )}
     </View>
   );
 };
