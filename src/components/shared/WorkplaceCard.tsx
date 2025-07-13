@@ -19,14 +19,10 @@ const WorkplaceCard = ({
   onToggle,
 }: WorkplaceCardProps) => {
   return (
-    <View className="bg-white rounded-3xl mb-4 shadow-medium border border-surface-100 overflow-hidden">
+    <View className="bg-white rounded-xl mb-4 border border-gray-200 overflow-hidden">
       {/* Header with gradient accent */}
       <View 
-        style={{ 
-          background: workplace.isActive 
-            ? 'linear-gradient(135deg, #22c55e 0%, #16a34a 100%)' 
-            : 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)'
-        }}
+        style={{ backgroundColor: workplace.isActive ? '#22c55e' : '#ef4444' }}
         className="h-1 w-full"
       />
       <View className="p-6">
@@ -37,7 +33,7 @@ const WorkplaceCard = ({
                 style={{ backgroundColor: workplace.color }}
                 className="w-4 h-4 rounded-full mr-3"
               />
-              <Text className="text-xl font-bold text-surface-900 mr-3">
+              <Text className="text-xl font-bold text-gray-800 mr-3">
                 {workplace.name}
               </Text>
               <Badge
@@ -47,17 +43,17 @@ const WorkplaceCard = ({
               />
             </View>
             <View className="flex-row items-center">
-              <View className="bg-surface-50 p-2 rounded-xl mr-2">
-                <Ionicons name="cash-outline" size={16} color="#7c6df2" />
+              <View className="bg-gray-100 p-2 rounded-lg mr-2">
+                <Ionicons name="cash-outline" size={16} color="#2563eb" />
               </View>
-              <Text className="text-surface-700 font-semibold">
+              <Text className="text-gray-700 font-semibold">
                 {workplace.dailyWage.toLocaleString("tr-TR")} ₺
               </Text>
-              <Text className="text-surface-500 ml-1">/ günlük</Text>
+              <Text className="text-gray-500 ml-1">/ günlük</Text>
             </View>
           </View>
           <View className="items-center">
-            <Text className="text-xs text-surface-500 mb-2 font-medium">Durum</Text>
+            <Text className="text-xs text-gray-500 mb-2 font-medium">Durum</Text>
             <ToggleSwitch
               isActive={workplace.isActive}
               onToggle={onToggle}
@@ -66,22 +62,22 @@ const WorkplaceCard = ({
           </View>
         </View>
         
-        <View className="flex-row justify-end space-x-3 mt-4 pt-4 border-t border-surface-100">
+        <View className="flex-row justify-end mt-4 pt-4 border-t border-gray-200">
           <TouchableOpacity
             onPress={onEdit}
-            className="bg-primary-50 px-4 py-3 rounded-2xl border border-primary-100 flex-row items-center"
+            className="bg-blue-50 px-4 py-3 rounded-lg border border-blue-200 flex-row items-center mr-3"
             activeOpacity={0.7}
           >
-            <Ionicons name="pencil" size={16} color="#7c6df2" />
-            <Text className="text-primary-600 font-semibold ml-2 text-sm">Düzenle</Text>
+            <Ionicons name="pencil" size={16} color="#2563eb" />
+            <Text className="text-blue-600 font-semibold ml-2 text-sm">Düzenle</Text>
           </TouchableOpacity>
           <TouchableOpacity
             onPress={onDelete}
-            className="bg-error-50 px-4 py-3 rounded-2xl border border-error-100 flex-row items-center"
+            className="bg-red-50 px-4 py-3 rounded-lg border border-red-200 flex-row items-center"
             activeOpacity={0.7}
           >
             <Ionicons name="trash" size={16} color="#ef4444" />
-            <Text className="text-error-600 font-semibold ml-2 text-sm">Sil</Text>
+            <Text className="text-red-600 font-semibold ml-2 text-sm">Sil</Text>
           </TouchableOpacity>
         </View>
       </View>

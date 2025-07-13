@@ -42,17 +42,17 @@ const WorkplaceList = () => {
   };
 
   return (
-    <View className="mt-6">
+    <View className="mt-8">
       <View className="flex-row justify-between items-center mb-6">
         <View>
-          <Text className="text-2xl font-bold text-gray-900">İş Yerleri</Text>
-          <Text className="text-gray-500 text-sm mt-1">
+          <Text className="text-2xl font-bold text-gray-800">İş Yerleri</Text>
+          <Text className="text-gray-600 text-sm mt-1">
             {workplaces?.length || 0} iş yeri bulundu
           </Text>
         </View>
         <TouchableOpacity
           onPress={() => navigation.navigate("WorkplaceForm", {})}
-          className="bg-gradient-to-r from-blue-500 to-blue-600 flex-row items-center px-4 py-3 rounded-xl shadow-lg shadow-blue-500/25"
+          className="bg-blue-600 flex-row items-center px-5 py-4 rounded-xl"
           activeOpacity={0.8}
         >
           <Ionicons name="add" size={20} color="white" />

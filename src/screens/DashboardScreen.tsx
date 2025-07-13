@@ -25,16 +25,16 @@ import { useToast } from "../components/shared/ui/ToastProvider";
 const WorkplaceListHeader = () => {
   const navigation = useNavigation<MainStackNavigationProp>();
   return (
-    <View className="flex-row justify-between items-center mb-6 mt-8">
+    <View className="flex-row justify-between items-center mb-6 mt-6">
       <View>
-        <Text className="text-3xl font-bold text-surface-900">İş Yerleri</Text>
-        <Text className="text-surface-500 text-base mt-1 font-medium">
+        <Text className="text-2xl font-bold text-gray-800">İş Yerleri</Text>
+        <Text className="text-gray-600 text-base mt-1 font-medium">
           İş yerlerinizi yönetin ve takip edin
         </Text>
       </View>
       <TouchableOpacity
         onPress={() => navigation.navigate("WorkplaceForm", {})}
-        className="bg-gradient-to-r from-primary-500 to-primary-600 flex-row items-center px-5 py-3.5 rounded-2xl shadow-lg shadow-primary-500/25"
+        className="bg-blue-600 flex-row items-center px-5 py-4 rounded-xl"
         activeOpacity={0.8}
       >
         <Ionicons name="add" size={20} color="white" />
@@ -130,21 +130,21 @@ const DashboardScreen = () => {
 
   if (error) {
     return (
-      <SafeAreaView className="flex-1 bg-surface-50">
+      <SafeAreaView className="flex-1 bg-gray-50">
         <Header />
         <View className="flex-1 justify-center items-center p-6">
-          <View className="bg-error-50 p-4 rounded-2xl mb-4">
+          <View className="bg-red-50 p-4 rounded-xl mb-4">
             <Ionicons name="alert-circle" size={32} color="#ef4444" />
           </View>
-          <Text className="text-error-600 text-xl font-bold mb-2">Hata Oluştu</Text>
-          <Text className="text-surface-700 text-center font-medium">{error}</Text>
+          <Text className="text-red-600 text-xl font-bold mb-2">Hata Oluştu</Text>
+          <Text className="text-gray-700 text-center font-medium">{error}</Text>
         </View>
       </SafeAreaView>
     );
   }
 
   const ListHeader = () => (
-    <View className="p-6 pb-0">
+    <View className="px-6 pt-6 pb-0">
       <View className="flex-row justify-between mb-6">
         <StatCard
           title="Bu Ay Toplam Kazanç"
@@ -171,7 +171,7 @@ const DashboardScreen = () => {
   );
 
   return (
-    <SafeAreaView className="flex-1 bg-surface-50">
+    <SafeAreaView className="flex-1 bg-gray-50">
       <Header />
       {(workplacesLoading || workdaysLoading) && (
         <LoadingSpinner text="Veriler yükleniyor..." fullScreen={true} />
